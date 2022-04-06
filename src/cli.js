@@ -3,6 +3,8 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { createProject } from './main_ref';
 import execa from 'execa';
+import path from 'path';
+
 
 function parseArgumentsIntoOptions(rawArgs) {
   const args = arg(
@@ -93,7 +95,10 @@ async function handleOptions(options){
   }
 
   if(options.commands.start){
-    const path = options.path;// || process.cwd(),
+    console.log("cwd", process.cwd());
+    console.log("dirname", __dirname);
+    
+    const path = options.path || "ss-template/main.js";
     const result = await execa('electron', [path], {
       cwd: process.cwd(),
     });
@@ -102,6 +107,11 @@ async function handleOptions(options){
 
 
 export async function cli(args) {
+  //set CWD
+  const rootCwd = path.resolve(__dirname, "../"); 
+  console.log("path?", path.resolve(__dirname, "../"));
+  process.chdir(rootCwd);
+
   console.log(args);
 
   let options = parseArgumentsIntoOptions(args);
@@ -109,8 +119,10 @@ export async function cli(args) {
   // options = await promptForMissingOptions(options);
   // await createProject(options);
 
+
+
   await handleOptions(options);
-  console.log("after handle");
+  console.log("after handle new");
   return;
 }
 
