@@ -1,4 +1,4 @@
-# `@dkundel/create-project`
+# `@etherx/server-spinner`
 
 🏗 Personal CLI to bootstrap new projects
 
